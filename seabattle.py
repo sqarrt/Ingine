@@ -19,6 +19,7 @@ LETTERKEYS = [
     'J'
 ]
 
+
 def digit(key):
     if key in LETTERKEYS:
         return LETTERKEYS.index(key) + 1
@@ -39,6 +40,14 @@ def area(posx, posy):
 def around(posx, posy):
     return [a for a in area(posx, posy) if
             not (a[0] == posx and a[1] == posy) and (1 <= a[0] <= 10 and 1 <= a[1] <= 10)]
+
+
+def cross_around(posx, posy):
+    res = []
+    for i in range(2):
+        res.append((posx, posy - 1 + i*2))
+        res.append((posx - 1 + i * 2, posy))
+    return [a for a in res if (1 <= a[0] <= 10 and 1 <= a[1] <= 10)]
 
 
 # Класс-родитель корабля
@@ -75,13 +84,13 @@ class SBGameShip:
 
     def gen_cells(self):
         if self.angle == 0:
-            self.cells = [[self.posx - cell, self.posy, False] for cell in range(self.length)]
+            self.cells = [[self.posx - cell, self.posy, SHIP] for cell in range(self.length)]
         elif ship.angle == 1:
-            self.cells = [[self.posx, self.posy + cell, False] for cell in range(self.length)]
+            self.cells = [[self.posx, self.posy + cell, SHIP] for cell in range(self.length)]
         elif ship.angle == 2:
-            self.cells = [[self.posx + cell, self.posy, False] for cell in range(self.length)]
+            self.cells = [[self.posx + cell, self.posy, SHIP] for cell in range(self.length)]
         elif ship.angle == 3:
-            self.cells = [[self.posx, self.posy - cell, False] for cell in range(self.length)]
+            self.cells = [[self.posx, self.posy - cell, SHIP] for cell in range(self.length)]
 
     def randompos(self):
         ship_not_put = True
@@ -94,7 +103,7 @@ class SBGameShip:
                 pass
 
     def isdead(self):
-        return False not in [a[2] for a in self.cells]
+        return False not in [a[2] == HIT for a in self.cells]
 
     def around(self):
         res = set()
@@ -114,7 +123,7 @@ class SBGameShip:
 class SBGameField:
     def __init__(self):
         self.ships = list()
-        self.hitten = set()
+        self.hitten = list()
 
         self.xlength = self.ylength = 10
 
@@ -127,19 +136,14 @@ class SBGameField:
 
     def __getitem__(self, key):
         key = digit(key)
-        rowitems = [None,] + [EMPTY for cell in range(10)]
+        rowitems = [None, ] + [EMPTY for cell in range(10)]
         for cell in self.hitten:
             if cell[0] == key:
                 rowitems[cell[1]] = cell[2]
         for ship in self.ships:
             for cell in ship.cells:
                 if cell[0] == key:
-                    if not cell[2]:
-                        rowitems[cell[1]] = SHIP
-                    elif ship.isdead():
-                        rowitems[cell[1]] = DEAD
-                    else:
-                        rowitems[cell[1]] = HIT
+                    rowitems[cell[1]] = cell[2]
         return rowitems
 
     def field(self):
@@ -181,17 +185,56 @@ class SBGameField:
 
     def hit(self, posx, posy):
         success = False
+        res = None
         for ship in self.ships:
             for cell in ship.cells:
                 if (cell[0], cell[1]) == (posx, posy):
-                    cell[2] = True
-                    self.hitten.add((posx, posy, HIT))
+                    cell[2] = HIT
+                    res = HIT
+                    self.hitten.append([posx, posy, HIT])
                     success = True
             if ship.isdead():
                 for a in ship.around():
-                    self.hitten.add((a[0], a[1], MISSED))
+                    self.hitten.append([a[0], a[1], MISSED])
+                    res = DEAD
+
+                for cell in self.hitten:
+                    for c in ship.cells:
+                        c[2] = DEAD
+                        if (cell[0], cell[1]) == (c[0], c[1]):
+                            cell[2] = c[2]
+
         if not success:
-            self.hitten.add((posx, posy, MISSED))
+            self.hitten.append([posx, posy, MISSED])
+            res = MISSED
+
+        return res
+
+    def ai_hit(self):
+        field = self.field()
+        hc = list(map(lambda cell: (cell[0], cell[1]), self.hitten))
+        try:
+            hhc = [(cell[0], cell[1]) for cell in self.hitten if cell[2] == HIT]
+            target = next((cell[0], cell[1]) for cell in self.hitten if cell[2] == HIT)
+
+            ca = cross_around(*target)
+            ca_hitten = [a for a in ca if a in hhc]
+
+            if ca_hitten:
+                near = next(cell for cell in ca_hitten)
+                d = (target[0] - near[0], target[1] - near[1])
+                target = (target[0] + d[0], target[1] + d[1])
+            else:
+                target = rnd.choice(ca)
+
+        except StopIteration:
+            target_chosen = False
+            while not target_chosen:
+                target = (rnd.randint(1, 10), rnd.randint(1, 10))
+                target_chosen = target not in hc
+
+        print(target)
+        return self.hit(*target)
 
 
 # инициализация поля
@@ -204,8 +247,11 @@ for i in range(1, 5):
         ship = SBGameShip(length = i, field = GameField)
         ship.randompos()
 
-
-
+for i in range(40):
+    field = GameField.field()
+    GameField.ai_hit()
 
 print(GameField.as_opposite())
 print(GameField)
+
+pass
