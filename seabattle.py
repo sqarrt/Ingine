@@ -29,6 +29,15 @@ def digit(key):
         raise ValueError
 
 
+def letter(key):
+    if key in LETTERKEYS:
+        return key
+    elif 1 <= key <= 10:
+        return LETTERKEYS[key-1]
+    else:
+        raise ValueError
+
+
 def area(posx, posy):
     res = []
     for i in range(3):
@@ -45,7 +54,7 @@ def around(posx, posy):
 def cross_around(posx, posy):
     res = []
     for i in range(2):
-        res.append((posx, posy - 1 + i*2))
+        res.append((posx, posy - 1 + i * 2))
         res.append((posx - 1 + i * 2, posy))
     return [a for a in res if (1 <= a[0] <= 10 and 1 <= a[1] <= 10)]
 
@@ -85,16 +94,16 @@ class SBGameShip:
     def gen_cells(self):
         if self.angle == 0:
             self.cells = [[self.posx - cell, self.posy, SHIP] for cell in range(self.length)]
-        elif ship.angle == 1:
+        elif self.angle == 1:
             self.cells = [[self.posx, self.posy + cell, SHIP] for cell in range(self.length)]
-        elif ship.angle == 2:
+        elif self.angle == 2:
             self.cells = [[self.posx + cell, self.posy, SHIP] for cell in range(self.length)]
-        elif ship.angle == 3:
+        elif self.angle == 3:
             self.cells = [[self.posx, self.posy - cell, SHIP] for cell in range(self.length)]
 
     def randompos(self):
         ship_not_put = True
-        while(ship_not_put):
+        while (ship_not_put):
             try:
                 self.__randomcoords()
                 self.field.put_ship(self)
@@ -103,7 +112,11 @@ class SBGameShip:
                 pass
 
     def isdead(self):
-        return False not in [a[2] == HIT for a in self.cells]
+        is_d = False not in [a[2] == HIT for a in self.cells]
+        if is_d:
+            for i, cell in enumerate(self.cells):
+                self.cells[i][2] = DEAD
+        return is_d
 
     def around(self):
         res = set()
@@ -124,7 +137,14 @@ class SBGameField:
     def __init__(self):
         self.ships = list()
         self.hitten = list()
+        self.ship_hitten = list()
 
+        self.xlength = self.ylength = 10
+
+    def clean(self):
+        self.ships = list()
+        self.hitten = list()
+        self.ship_hitten = list()
         self.xlength = self.ylength = 10
 
     def get_all_ship_cells(self):
@@ -158,8 +178,20 @@ class SBGameField:
         border = '-' * len(header)
         content = '\n'.join(
             ['{:<2}'.format(str(i)) + ' |' + '|'.join(
-             '{:^5}'.format(field[key][i]) for key in field.keys()) + '|\n' + border for i in range(1, 11)])
+                '{:^5}'.format(field[key][i]) for key in field.keys()) + '|\n' + border for i in range(1, 11)])
         return header + '\n' + border + '\n' + content
+
+    def oneline(self):
+        field = self.field()
+        content = ''.join([''.join('{:^5}'.format(field[key][i]) for key in field.keys()) for i in range(1, 11)])
+        content = ''.join(map(lambda a: a if a is not ' ' else '_', content))
+        return content
+
+    def op_oneline(self):
+        field = self.opfield()
+        content = ''.join([''.join('{:^5}'.format(field[key][i]) for key in field.keys()) for i in range(1, 11)])
+        content = ''.join(map(lambda a: a if a is not ' ' else '_', content))
+        return content
 
     def as_opposite(self):
         field = self.opfield()
@@ -167,7 +199,7 @@ class SBGameField:
         border = '-' * len(header)
         content = '\n'.join(
             ['{:<2}'.format(str(i)) + ' |' + '|'.join(
-             '{:^5}'.format(field[key][i]) for key in field.keys()) + '|\n' + border for i in range(1, 11)])
+                '{:^5}'.format(field[key][i]) for key in field.keys()) + '|\n' + border for i in range(1, 11)])
         return header + '\n' + border + '\n' + content
 
     def can_ship(self, posx, posy):
@@ -182,6 +214,9 @@ class SBGameField:
         if not crossing:
             raise ValueError('Здесь нельзя поставить корабль')
         self.ships.append(ship)
+
+    def get_insulted(self):
+        return [a for a in self.ship_hitten if a[2] == HIT]
 
     def hit(self, posx, posy):
         success = False
@@ -204,54 +239,66 @@ class SBGameField:
                         if (cell[0], cell[1]) == (c[0], c[1]):
                             cell[2] = c[2]
 
-        if not success:
-            self.hitten.append([posx, posy, MISSED])
-            res = MISSED
-
         return res
 
     def ai_hit(self):
-        field = self.field()
-        hc = list(map(lambda cell: (cell[0], cell[1]), self.hitten))
-        try:
-            hhc = [(cell[0], cell[1]) for cell in self.hitten if cell[2] == HIT]
-            target = next((cell[0], cell[1]) for cell in self.hitten if cell[2] == HIT)
+        field = self.opfield()
+        hc = map(lambda a: (a[0], a[1]), self.hitten)
 
-            ca = cross_around(*target)
-            ca_hitten = [a for a in ca if a in hhc]
+        insulted = self.get_insulted()
 
-            if ca_hitten:
-                near = next(cell for cell in ca_hitten)
-                d = (target[0] - near[0], target[1] - near[1])
-                target = (target[0] + d[0], target[1] + d[1])
-            else:
-                target = rnd.choice(ca)
-
-        except StopIteration:
+        if len(insulted) == 0:
             target_chosen = False
             while not target_chosen:
                 target = (rnd.randint(1, 10), rnd.randint(1, 10))
                 target_chosen = target not in hc
+        elif len(insulted) == 1:
+            target = rnd.choice(cross_around(insulted[0][0], insulted[0][1]))
+        elif len(insulted) > 1:
+            xses = [cell[0] for cell in insulted]
+            yses = [cell[1] for cell in insulted]
+            last = next(a for a in reversed(self.ship_hitten) if a[2] == HIT)
+            ca = cross_around(last[0], last[1])
+            print(last, ca)
+            if len(set(xses)) == 1:
+                ca = [a for a in ca if
+                      a[0] == xses[0]]
+                print(last, ca)
+                ca = [a for a in ca if field[letter(a[0])][a[1]] == EMPTY]
+                print(last, ca)
+                if not ca:
+                    last = next(a for a in self.ship_hitten if a[2] == HIT)
+                    ca = cross_around(last[0], last[1])
+                    print(last, ca)
+                    ca = [a for a in ca if
+                          a[0] == xses[0]]
+                    print(last, ca)
+                    ca = [a for a in ca if field[letter(a[0])][a[1]] == EMPTY]
+                    print(last, ca)
+                try:
+                    target = ca[0]
+                except IndexError:
+                    print(self.as_opposite(), '\n', self)
+            elif len(set(yses)) == 1:
+                ca = [a for a in ca if
+                      a[1] == yses[0]]
+                print(last, ca)
+                ca = [a for a in ca if field[letter(a[0])][a[1]] == EMPTY]
+                print(last, ca)
+                if not ca:
+                    last = next(a for a in self.ship_hitten if a[2] == HIT)
+                    ca = cross_around(last[0], last[1])
+                    print(last, ca)
+                    ca = [a for a in ca if
+                          a[1] == yses[1]]
+                    print(last, ca)
+                    ca = [a for a in ca if field[letter(a[0])][a[1]] == EMPTY]
+                    print(last, ca)
+                try:
+                    target = ca[0]
+                except IndexError:
+                    print(self.as_opposite(), '\n', self)
 
-        print(target)
-        return self.hit(*target)
+        res = self.hit(*target)
 
-
-# инициализация поля
-GameField = SBGameField()
-
-# инициализация кораблей
-ships = []
-for i in range(1, 5):
-    for j in reversed(range(5-i)):
-        ship = SBGameShip(length = i, field = GameField)
-        ship.randompos()
-
-for i in range(40):
-    field = GameField.field()
-    GameField.ai_hit()
-
-print(GameField.as_opposite())
-print(GameField)
-
-pass
+        return res
