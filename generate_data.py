@@ -4,7 +4,7 @@ import random as rnd
 # инициализация поля
 GameField = sb.SBGameField()
 
-for k in range(5000):
+for k in range(10000):
     GameField.clean()
 
     # инициализация кораблей
@@ -18,4 +18,5 @@ for k in range(5000):
 
     file = open('data.csv', 'a')
     file.write(GameField.op_oneline()+';'+GameField.oneline()+'\n')
+    print(k, '%')
     file.close()

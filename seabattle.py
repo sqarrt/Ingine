@@ -183,13 +183,13 @@ class SBGameField:
 
     def oneline(self):
         field = self.field()
-        content = ''.join([''.join('{:^5}'.format(field[key][i]) for key in field.keys()) for i in range(1, 11)])
+        content = ''.join([''.join(field[key][i] for key in field.keys()) for i in range(1, 11)])
         content = ''.join(map(lambda a: a if a is not ' ' else '_', content))
         return content
 
     def op_oneline(self):
         field = self.opfield()
-        content = ''.join([''.join('{:^5}'.format(field[key][i]) for key in field.keys()) for i in range(1, 11)])
+        content = ''.join([''.join(field[key][i] for key in field.keys()) for i in range(1, 11)])
         content = ''.join(map(lambda a: a if a is not ' ' else '_', content))
         return content
 
