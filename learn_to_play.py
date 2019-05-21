@@ -53,15 +53,6 @@ def load_data():
 # Загружаем данные
 (X_train, y_train), (X_test, y_test) = load_data()
 
-# # Преобразование размерности изображений
-# X_train = X_train.reshape(60000, 784)
-# X_test = X_test.reshape(10000, 784)
-# # Нормализация данных
-# X_train = X_train.astype('float32')
-# X_test = X_test.astype('float32')
-# X_train /= 255
-# X_test /= 255
-
 # Создаем последовательную модель
 model = Sequential()
 
