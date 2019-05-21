@@ -1,10 +1,11 @@
 import os
-
-os.environ['KERAS_BACKEND'] = 'theano'
+import numpy
 
 from keras.datasets import mnist
 from keras import utils
 import ann
+
+os.environ['KERAS_BACKEND'] = 'theano'
 
 # Загружаем данные
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -22,6 +23,6 @@ X_test /= 255
 Y_train = utils.to_categorical(y_train, 10)
 Y_test = utils.to_categorical(y_test, 10)
 
-categorizer = ann.get_categorizer(X_train, y_train, 10)
+categorizer = ann.get_categorizer(X_train, y_train, 10, epochs = 2)
 
-print(categorizer(y_test[0]))
+print(categorizer(X_test[0].reshape(1, 784)))

@@ -72,8 +72,8 @@ res = loaded_model.predict(X_test)
 
 print(res[0])
 
-xt = numpy.asarray([255 if a == 1 else a for a in X_test[15]]).reshape(10,10)
-yt = numpy.asarray([255 if a == 1 else a for a in y_test[15]]).reshape(10,10)
+xt = numpy.asarray([255 if a == 1 else a for a in X_test[15]]).reshape(10, 10)
+yt = numpy.asarray([255 if a == 1 else a for a in y_test[15]]).reshape(10, 10)
 rt = numpy.asarray([int(-numpy.sign(a))*255 for a in res[15]]).reshape(10, 10)
 
 from PIL import Image, ImageDraw
