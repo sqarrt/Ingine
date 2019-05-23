@@ -1,4 +1,4 @@
-import seabattle as sb
+import seabattle_engine as sb
 import random as rnd
 
 # инициализация поля
