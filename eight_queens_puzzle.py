@@ -3,7 +3,7 @@ from pyeasyga import pyeasyga
 import ga
 
 # setup seed data
-data = [0, 1, 2, 3]
+data = [0, 1, 2, 3, 4, 5, 6, 7]
 
 # initialise the GA
 gaa = pyeasyga.GeneticAlgorithm(data,
@@ -60,11 +60,11 @@ def fitness(individual, data):
 
 def print_board(board_representation):
     def print_x_in_row(row_length, x_position):
-        print(''.join(['----' for _ in range(row_length)]))
+        print('-' + ''.join(['----' for _ in range(row_length)]))
         print('|' + ''.join([' X |' if i == x_position else '   |' for i in range(row_length)])),
 
     def print_board_bottom(row_length):
-        print(''.join(['----' for _ in range(row_length)]))
+        print('-' + ''.join(['----' for _ in range(row_length)]))
 
     num_of_rows = len(board_representation)
     row_length = num_of_rows  #rows == columns in a chessboard
