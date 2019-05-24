@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Ingine
-Version: 0.1.1a0
+Version: 0.1.21a0
 Summary: A cross-platform library for easy-access AI tools
 Home-page: https://github.com/sqarrt/ingine
 Author: sqarrt
@@ -63,9 +63,9 @@ Description: # Ingine - a cross-platform AI toolbox
         
         # defining layers
         layers = [Dense(100, input_dim = 100, activation = "softsign", kernel_initializer = "normal"),
-                      Dense(20, activation = "softsign", kernel_initializer = "normal"),
-                      Dense(10, activation = "softsign", kernel_initializer = "normal"),
-                      Dense(100, activation = "softsign", kernel_initializer = "normal")]
+                  Dense(20, activation = "softsign", kernel_initializer = "normal"),
+                  Dense(10, activation = "softsign", kernel_initializer = "normal"),
+                  Dense(100, activation = "softsign", kernel_initializer = "normal")]
         
         customnn = ann.get_customnn(X_train, Y_train, layers = layers)
         
@@ -106,12 +106,12 @@ Description: # Ingine - a cross-platform AI toolbox
             return abs(sum(creature) - 100)
         
         """getting an optimizer"""
-        optimiser = ga.get_optimizer(points,
-                                                      fitness,
-                                                      maximise_fitness = False,
-                                                      create_individual = create_individual,
-                                                      mutate = mutate,
-                                                      crossover = crossover)
+        optimiser = ga.get_optimizer(data,
+                                     fitness,
+                                     maximise_fitness = False,
+                                     create_individual = create_individual,
+                                     mutate = mutate,
+                                     crossover = crossover)
         
         """check out how it works!"""
         res = optimiser()[1]
@@ -119,7 +119,7 @@ Description: # Ingine - a cross-platform AI toolbox
         
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: Academic Free License (AFL)
+Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Classifier: Natural Language :: Russian
 Description-Content-Type: text/markdown
