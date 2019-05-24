@@ -55,9 +55,9 @@ from keras.layers import Dense
 
 # defining layers
 layers = [Dense(100, input_dim = 100, activation = "softsign", kernel_initializer = "normal"),
-              Dense(20, activation = "softsign", kernel_initializer = "normal"),
-              Dense(10, activation = "softsign", kernel_initializer = "normal"),
-              Dense(100, activation = "softsign", kernel_initializer = "normal")]
+          Dense(20, activation = "softsign", kernel_initializer = "normal"),
+          Dense(10, activation = "softsign", kernel_initializer = "normal"),
+          Dense(100, activation = "softsign", kernel_initializer = "normal")]
 
 customnn = ann.get_customnn(X_train, Y_train, layers = layers)
 
@@ -98,12 +98,12 @@ def fitness(creature, data):
     return abs(sum(creature) - 100)
 
 """getting an optimizer"""
-optimiser = ga.get_optimizer(points,
-                                              fitness,
-                                              maximise_fitness = False,
-                                              create_individual = create_individual,
-                                              mutate = mutate,
-                                              crossover = crossover)
+optimiser = ga.get_optimizer(data,
+                             fitness,
+                             maximise_fitness = False,
+                             create_individual = create_individual,
+                             mutate = mutate,
+                             crossover = crossover)
 
 """check out how it works!"""
 res = optimiser()[1]
