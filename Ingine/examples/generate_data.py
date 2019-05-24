@@ -16,7 +16,7 @@ for k in range(10000):
     for i in range(rnd.randint(1, 130)):
         GameField.ai_hit()
 
-    file = open('data.csv', 'a')
+    file = open('data.py', 'a')
     file.write(GameField.op_oneline()+';'+GameField.oneline()+'\n')
     print(k, '%')
     file.close()

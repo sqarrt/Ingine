@@ -15,33 +15,35 @@ numpy.random.seed(151681)
 
 def load_data():
     """
-    Функция получения данных из data.csv
+    Функция получения данных из data.py
     :return: list(2) of lists(2)
     """
     input_data = []
     output_data = []
 
-    with open('data.csv') as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter = ';')
-        for row in csv_reader:
-            in_data = row[0]
-            out_data = row[1]
-            in_data = in_data.replace('X', '1')
-            in_data = in_data.replace('+', '1')
-            in_data = in_data.replace('_', '0')
-            in_data = in_data.replace('-', '0')
+    from data import data
 
-            out_data = out_data.replace('X', '0')
-            out_data = out_data.replace('+', '0')
-            out_data = out_data.replace('O', '1')
-            out_data = out_data.replace('_', '0')
-            out_data = out_data.replace('-', '0')
+    data = [_.split(';') for _ in data.split('\n')]
 
-            in_data = list(map(lambda a: int(a), in_data))
-            out_data = list(map(lambda a: int(a), out_data))
+    for row in data:
+        in_data = row[0]
+        out_data = row[1]
+        in_data = in_data.replace('X', '1')
+        in_data = in_data.replace('+', '1')
+        in_data = in_data.replace('_', '0')
+        in_data = in_data.replace('-', '0')
 
-            input_data.append(in_data)
-            output_data.append(out_data)
+        out_data = out_data.replace('X', '0')
+        out_data = out_data.replace('+', '0')
+        out_data = out_data.replace('O', '1')
+        out_data = out_data.replace('_', '0')
+        out_data = out_data.replace('-', '0')
+
+        in_data = list(map(lambda a: int(a), in_data))
+        out_data = list(map(lambda a: int(a), out_data))
+
+        input_data.append(in_data)
+        output_data.append(out_data)
 
     input_data = numpy.asarray(input_data)
     output_data = numpy.asarray(output_data)
