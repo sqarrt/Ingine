@@ -37,7 +37,7 @@ print(categorizer(X_train[0]), Y_train[0])
 from Ingine import ann
 
 """getting dataset"""
-(X_train, Y_train), (X_test, Y_test) = get_dataset()
+(X_train, Y_train), (X_test, Y_test)**** = get_dataset()
 
 regression = ann.get_regression(X_train, y_train)
 

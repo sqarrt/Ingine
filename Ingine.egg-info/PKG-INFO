@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Ingine
-Version: 0.1.21a0
+Version: 0.1.3
 Summary: A cross-platform library for easy-access AI tools
 Home-page: https://github.com/sqarrt/ingine
 Author: sqarrt
@@ -45,7 +45,7 @@ Description: # Ingine - a cross-platform AI toolbox
         from Ingine import ann
         
         """getting dataset"""
-        (X_train, Y_train), (X_test, Y_test) = get_dataset()
+        (X_train, Y_train), (X_test, Y_test)**** = get_dataset()
         
         regression = ann.get_regression(X_train, y_train)
         
