@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f4e63cc-6b7a-4bbf-bbf1-9b83de115be5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ingine.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/Ingine.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ingine.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Ingine.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ingine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ingine/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/Ingine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/Ingine/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="4f4e63cc-6b7a-4bbf-bbf1-9b83de115be5" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -353,7 +347,7 @@
       <workItem from="1558702697017" duration="7389000" />
       <workItem from="1558711164841" duration="1078000" />
       <workItem from="1558713665334" duration="2260000" />
-      <workItem from="1558723305873" duration="1378000" />
+      <workItem from="1558723305873" duration="1445000" />
     </task>
     <task id="LOCAL-00001" summary="ai_hit finished, data got">
       <created>1555772529169</created>
@@ -390,15 +384,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558724993824</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="version fix">
+      <created>1558725115496</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1558725115496</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47039000" />
+    <option name="totallyTimeSpent" value="47106000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1049" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25773746" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -411,7 +411,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49895832" weight="0.32912722" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49895832" weight="0.3286638" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50104165" side_tool="true" weight="0.32912722" />
       <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3297414" />
