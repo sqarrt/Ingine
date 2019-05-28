@@ -6,7 +6,7 @@ rnd.seed(151685)
 
 points = []
 
-for i in range(22):
+for i in range(30):
     points.append(tuple([rnd.randint(0, 100), rnd.randint(0, 100)]))
 
 
@@ -51,8 +51,8 @@ def fitness(creature, data):
 
 optimiser = ga.get_optimizer(points,
                              fitness,
-                             20,
-                             2000,
+                             100,
+                             1000,
                              maximise_fitness = False,
                              create_individual = create_individual,
                              mutate = mutate,

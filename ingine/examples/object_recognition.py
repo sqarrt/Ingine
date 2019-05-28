@@ -1,14 +1,14 @@
 import os
 import numpy
 
-from keras.datasets import mnist
+from keras.datasets import fashion_mnist
 from keras import utils
 from ingine import ann
 
 os.environ['KERAS_BACKEND'] = 'theano'
 
 # Загружаем данные
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+(X_train, y_train), (X_test, y_test) = fashion_mnist.load_data()
 
 # Преобразование размерности изображений
 X_train = X_train.reshape(60000, 784)

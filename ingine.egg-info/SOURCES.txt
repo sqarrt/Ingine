@@ -14,6 +14,7 @@ ingine/examples/data.py
 ingine/examples/digit_recognition.py
 ingine/examples/eight_queens_puzzle.py
 ingine/examples/generate_data.py
+ingine/examples/object_recognition.py
 ingine/examples/salesman_issue.py
 ingine/examples/seabattle.py
 ingine/examples/seabattle_engine.py
