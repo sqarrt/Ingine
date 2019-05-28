@@ -1,5 +1,5 @@
 import random as rnd
-from Ingine import ga
+from ingine import ga
 
 
 rnd.seed(151685)

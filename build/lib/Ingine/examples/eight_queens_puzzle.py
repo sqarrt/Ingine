@@ -1,6 +1,6 @@
 import random
 from pyeasyga import pyeasyga
-from Ingine import ga
+from ingine import ga
 
 # setup seed data
 data = [0, 1, 2, 3, 4, 5, 6, 7]

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-import Ingine
+import ingine
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -8,8 +8,8 @@ with open("README.md", "r") as fh:
 print(find_packages())
 
 setup(
-    name = "Ingine",
-    version = Ingine.__version__,
+    name = "ingine",
+    version = ingine.__version__,
     author = "sqarrt",
     author_email = "sqarrt1337@gmail.com",
     description = "A cross-platform library for easy-access AI tools",

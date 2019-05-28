@@ -7,7 +7,7 @@ os.environ['KERAS_BACKEND'] = 'theano'
 from keras.layers import Dense
 import csv
 
-from Ingine import ann
+from ingine import ann
 
 # Устанавливаем seed для повторяемости результатов
 numpy.random.seed(151681)

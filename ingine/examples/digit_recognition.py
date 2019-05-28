@@ -3,7 +3,7 @@ import numpy
 
 from keras.datasets import mnist
 from keras import utils
-from Ingine import ann
+from ingine import ann
 
 os.environ['KERAS_BACKEND'] = 'theano'
 
