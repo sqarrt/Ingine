@@ -21,7 +21,7 @@
 
 ## Classify:
 ```python
-from Ingine import ann
+from ingine import ann
 
 """getting dataset"""
 (X_train, Y_train), (X_test, Y_test) = get_dataset()
@@ -34,7 +34,7 @@ print(categorizer(X_train[0]), Y_train[0])
 
 ## Regression:
 ```python
-from Ingine import ann
+from ingine import ann
 
 """getting dataset"""
 (X_train, Y_train), (X_test, Y_test)**** = get_dataset()
@@ -47,7 +47,7 @@ print(regression(X_train[0]), Y_train[0])
 
 ## Custom layer configuration:
 ```python
-from Ingine import ann
+from ingine import ann
 from keras.layers import Dense
 
 """getting dataset"""
@@ -67,7 +67,7 @@ print(customnn(X_train[0]), Y_train[0])
 
 ## Evolutional optimizer:
 ```python
-from Ingine import ga
+from ingine import ga
 import random as rnd
 
 """define an example creature"""
